@@ -82,8 +82,9 @@ let enum = File("HTTPMethods.swift") {
     }
     """
 }.value(for: Statics.self) {
-    List(methods) { method in
+    List(methods, separatedBy: "\n") { method in
         """
+        /// HTTP Method: `\(method)`
         static let \(method.lowercased()) = "\(method)" 
         """
     }
@@ -96,9 +97,16 @@ let enum = File("HTTPMethods.swift") {
 > import Foundation
 > 
 > enum HTTPMethods {
+>     /// HTTP Method: `GET`
 >     static let get = "GET"
+>
+>     /// HTTP Method: `GET`
 >     static let post = "POST"
+>
+>     /// HTTP Method: `GET`
 >     static let update = "UPDATE"
+>
+>     /// HTTP Method: `GET`
 >     static let delete = "DELETE"
 > }
 > ```
