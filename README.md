@@ -100,13 +100,13 @@ let enum = File("HTTPMethods.swift") {
 >     /// HTTP Method: `GET`
 >     static let get = "GET"
 >
->     /// HTTP Method: `GET`
+>     /// HTTP Method: `POST`
 >     static let post = "POST"
 >
->     /// HTTP Method: `GET`
+>     /// HTTP Method: `UPDATE`
 >     static let update = "UPDATE"
 >
->     /// HTTP Method: `GET`
+>     /// HTTP Method: `DELETE`
 >     static let delete = "DELETE"
 > }
 > ```
