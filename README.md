@@ -50,7 +50,7 @@ let file = File("queen.txt") {
 Create formatted lists from an array of items:
 
 ```swift
-let fuits = ["🍎", "🍑", "🍊", "🍉"]
+let fruits = ["🍎", "🍑", "🍊", "🍉"]
 let file = File("shopping.txt") {
     List(fruits) { fruit in
         "- \(fruit)"
@@ -73,7 +73,7 @@ Use interpolation to dynamically generate and insert content
 ```swift
 enum Statics: InterpolationKey {} 
 let methods = ["GET", "POST", "UPDATE", "DELETE"]
-let enum = File("HTTPMethods.swift") {
+let file = File("HTTPMethods.swift") {
     """
     import Foundation
     
