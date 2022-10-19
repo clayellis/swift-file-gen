@@ -6,7 +6,7 @@ let package = Package(
     name: "swift-file-gen",
     products: [
         .library(
-            name: "swift-file-gen",
+            name: "FileGen",
             targets: ["FileGen"]
         ),
     ],
