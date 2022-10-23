@@ -196,6 +196,65 @@ final class FileGenTests: XCTestCase {
         """)
     }
 
+    func testListInnerInterpolation() {
+        enum Documentation: InterpolationKey {}
+
+        let items = ["one", "two", "three"]
+
+        let file = File("test.txt") {
+            List(items) { item in
+                """
+                    \(Documentation.self)
+                \(item)
+                """
+            }
+            .value(for: Documentation.self) {
+                "/// This is documentation"
+            }
+        }
+        .value(for: Documentation.self) {
+            "There shouldn't be any keys left"
+        }
+
+        XCTAssertEqual(file.contents, """
+            /// This is documentation
+        one
+            /// This is documentation
+        two
+            /// This is documentation
+        three
+
+        """)
+    }
+
+    func testListOuterInterpolation() {
+        enum Documentation: InterpolationKey {}
+
+        let items = ["one", "two", "three"]
+
+        let file = File("test.txt") {
+            List(items) { item in
+                """
+                    \(Documentation.self)
+                \(item)
+                """
+            }
+        }
+        .value(for: Documentation.self) {
+            "Test"
+        }
+
+        XCTAssertEqual(file.contents, """
+            Test
+        one
+            Test
+        two
+            Test
+        three
+
+        """)
+    }
+
     func testInterpolationAllLinesIndented() {
         enum EnumCases: InterpolationKey {}
 
