@@ -5,14 +5,15 @@ public extension File {
         public let message: String
     }
 
-    func write(into url: URL, using fileManager: FileManager = .default) throws {
-        try write(to: url.appendingPathComponent(name), using: fileManager)
+    func write(into url: URL, attributes: [FileAttributeKey: Any]? = nil, using fileManager: FileManager = .default) throws {
+        try write(to: url.appendingPathComponent(name), attributes: attributes, using: fileManager)
     }
 
-    func write(to url: URL, using fileManager: FileManager = .default) throws {
+    func write(to url: URL, attributes: [FileAttributeKey: Any]? = nil, using fileManager: FileManager = .default) throws {
         let success = fileManager.createFile(
             atPath: url.path,
-            contents: contents.data(using: .utf8)
+            contents: contents.data(using: .utf8),
+            attributes: attributes
         )
 
         guard success else {

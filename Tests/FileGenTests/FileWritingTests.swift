@@ -16,24 +16,30 @@ final class FileWritingTests: XCTestCase {
 
     func deleteTestsDirectory() throws {
         if FileManager.default.fileExists(atPath: tests.path) {
-            try FileManager.default.removeItem(at: tests)
+            do {
+                try FileManager.default.removeItem(at: tests)
+            } catch {
+                print("Failed to delete test directory \(tests.path): \(error)")
+            }
         }
     }
 
     func testFileWriteTo() throws {
         let file = File(name: "test.txt", contents: "Hello, World!")
         let writeURL = tests.appendingPathComponent("override.txt")
-        try file.write(to: writeURL)
+        try file.write(to: writeURL, attributes: [.immutable: true])
         XCTAssert(FileManager.default.fileExists(atPath: writeURL.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: tests.appendingPathComponent("test.txt").path))
         let contents = try XCTUnwrap(FileManager.default.contents(atPath: writeURL.path))
         XCTAssertEqual(file.contents, String(decoding: contents, as: UTF8.self))
+        let attributes = try FileManager.default.attributesOfItem(atPath: writeURL.path)
+        XCTAssertEqual(attributes[.immutable] as? Bool, true)
     }
 
     func testFileWriteInto() throws {
         let file = File(name: "test.txt", contents: "Hello, World!")
         let fileURL = tests.appendingPathComponent("test.txt")
-        try file.write(into: tests)
+        try file.write(into: tests, attributes: [.immutable: true])
         XCTAssert(FileManager.default.fileExists(atPath: fileURL.path))
         let contents = try XCTUnwrap(FileManager.default.contents(atPath: fileURL.path))
         XCTAssertEqual(file.contents, String(decoding: contents, as: UTF8.self))
