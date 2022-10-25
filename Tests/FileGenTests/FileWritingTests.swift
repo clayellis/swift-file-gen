@@ -22,8 +22,9 @@ final class FileWritingTests: XCTestCase {
 
     func testFileWriteTo() throws {
         let file = File(name: "test.txt", contents: "Hello, World!")
-        let writeURL = tests.appendingPathComponent("override.txt")
-        try file.write(to: writeURL)
+        let writeURL = tests.appendingPathComponent(file.name)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: writeURL.path))
+        try file.write(to: writeURL, attributes: [:])
         XCTAssert(FileManager.default.fileExists(atPath: writeURL.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: tests.appendingPathComponent("test.txt").path))
         let contents = try XCTUnwrap(FileManager.default.contents(atPath: writeURL.path))
@@ -33,7 +34,7 @@ final class FileWritingTests: XCTestCase {
     func testFileWriteInto() throws {
         let file = File(name: "test.txt", contents: "Hello, World!")
         let fileURL = tests.appendingPathComponent("test.txt")
-        try file.write(into: tests)
+        try file.write(into: tests, attributes: [:])
         XCTAssert(FileManager.default.fileExists(atPath: fileURL.path))
         let contents = try XCTUnwrap(FileManager.default.contents(atPath: fileURL.path))
         XCTAssertEqual(file.contents, String(decoding: contents, as: UTF8.self))
