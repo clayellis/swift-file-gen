@@ -56,7 +56,8 @@ public extension File {
 
         let success = fileManager.createFile(
             atPath: url.path,
-            contents: contents.data(using: .utf8)
+            contents: contents.data(using: .utf8),
+            attributes: attributes
         )
 
         guard success else {
