@@ -2,7 +2,7 @@ import Foundation
 
 public struct File {
     public let name: String
-    public let contents: String
+    public var contents: String
 
     public init(name: String, contents: String) {
         self.name = name
