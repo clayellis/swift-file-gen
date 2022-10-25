@@ -5,11 +5,26 @@ public extension File {
         public let message: String
     }
 
-    func write(into url: URL, unlockingIfLocked shouldUnlock: Bool = true, attributes: [FileAttributeKey: Any]? = nil, using fileManager: FileManager = .default) throws {
-        try write(to: url.appendingPathComponent(name), unlockingIfLocked: shouldUnlock, attributes: attributes, using: fileManager)
+    func write(
+        into url: URL,
+        unlockingIfLocked shouldUnlock: Bool = true,
+        attributes: [FileAttributeKey: Any] = [.immutable: true],
+        using fileManager: FileManager = .default
+    ) throws {
+        try write(
+            to: url.appendingPathComponent(name),
+            unlockingIfLocked: shouldUnlock,
+            attributes: attributes,
+            using: fileManager
+        )
     }
 
-    func write(to url: URL, unlockingIfLocked shouldUnlock: Bool = true, attributes: [FileAttributeKey: Any]? = nil, using fileManager: FileManager = .default) throws {
+    func write(
+        to url: URL,
+        unlockingIfLocked shouldUnlock: Bool = true,
+        attributes: [FileAttributeKey: Any] = [.immutable: true],
+        using fileManager: FileManager = .default
+    ) throws {
         var attributesToReset = [FileAttributeKey: Bool]()
 
         defer {
@@ -33,7 +48,7 @@ public extension File {
                 // Flip the flag back on
                 .mapValues { !$0 }
                 // Take out any attributes that were explicitly passed in
-                .filter { attributes?[$0.key] == nil }
+                .filter { attributes[$0.key] == nil }
 
             // Unlock the file
             try fileManager.setAttributes(attributesToUnset, ofItemAtPath: url.path)
