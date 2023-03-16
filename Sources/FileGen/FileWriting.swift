@@ -8,7 +8,7 @@ public extension File {
     func write(
         into url: URL,
         unlockingIfLocked shouldUnlock: Bool = true,
-        attributes: [FileAttributeKey: Any] = [.immutable: true],
+        attributes: [FileAttributeKey: Any] = [:],
         using fileManager: FileManager = .default
     ) throws {
         try write(
@@ -22,7 +22,7 @@ public extension File {
     func write(
         to url: URL,
         unlockingIfLocked shouldUnlock: Bool = true,
-        attributes: [FileAttributeKey: Any] = [.immutable: true],
+        attributes: [FileAttributeKey: Any] = [:],
         using fileManager: FileManager = .default
     ) throws {
         var attributesToReset = [FileAttributeKey: Bool]()
